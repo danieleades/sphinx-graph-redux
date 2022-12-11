@@ -1,8 +1,10 @@
 """Shared state for the sphinx-graph extension."""
 
+from __future__ import annotations
+
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Dict, Iterator
+from typing import Iterator
 
 from sphinx.environment import BuildEnvironment
 from sphinx.errors import DocumentError
@@ -23,7 +25,7 @@ class DuplicateIdError(DocumentError):
 class State:
     """State object for Sphinx Graph vertices."""
 
-    all_vertices: Dict[str, VertexInfo]
+    all_vertices: dict[str, VertexInfo]
 
     def insert_vertex(self, uid: str, info: VertexInfo) -> None:
         """Insert a vertex into the context.
@@ -37,7 +39,7 @@ class State:
 
     @classmethod
     @contextmanager
-    def get(cls, env: BuildEnvironment) -> Iterator["State"]:
+    def get(cls, env: BuildEnvironment) -> Iterator[State]:
         """Get the GraphContext object for the given environment."""
         all_vertices = getattr(env, "graph_all_vertices", {})
         state = State(all_vertices)

@@ -25,21 +25,16 @@ class Directive(SphinxDirective):
 
     def run(self) -> Sequence[nodes.Node]:
         """Run the directive and return a Vertex node."""
-
-        content_node = nodes.Element()
-        nested_parse_with_titles(self.state, self.content, content_node)
-
         uid = self.arguments[0]
-
-        placeholder_node = VertexNode(graph_uid=uid)
+        content_node = VertexNode(graph_uid=uid)
+        nested_parse_with_titles(self.state, self.content, content_node)
 
         with State.get(self.env) as state:
             state.insert_vertex(
                 uid,
                 Info(
                     docname=self.env.docname,
-                    content=content_node,
                 ),
             )
 
-        return [placeholder_node]
+        return [content_node]

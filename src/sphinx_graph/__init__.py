@@ -36,16 +36,14 @@ class ExtensionMetadata(TypedDict):
 
 
 def visit_node(_self: nodes.GenericNodeVisitor, _node: Node) -> None:
-    """
-    Visits the Vertex node.
+    """Visits the Vertex node.
 
     This method is a no-op
     """
 
 
 def depart_node(_self: nodes.GenericNodeVisitor, _node: Node) -> None:
-    """
-    Visits the Vertex node.
+    """Visits the Vertex node.
 
     This method is a no-op
     """
@@ -53,7 +51,6 @@ def depart_node(_self: nodes.GenericNodeVisitor, _node: Node) -> None:
 
 def setup(app: Sphinx) -> ExtensionMetadata:
     """Set up the sphinx-graph extension."""
-
     app.add_node(
         Node,
         html=(visit_node, depart_node),
