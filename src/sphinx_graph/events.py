@@ -6,6 +6,7 @@ from docutils import nodes
 from sphinx.application import Sphinx
 from sphinx.environment import BuildEnvironment
 
+from sphinx_graph import layout
 from sphinx_graph.node import Node as VertexNode
 from sphinx_graph.state import State
 
@@ -16,18 +17,11 @@ __all__ = [
 ]
 
 
-def process(app: Sphinx, doctree: nodes.document, _fromdocname: str) -> None:
+def process(_app: Sphinx, doctree: nodes.document, _fromdocname: str) -> None:
     """Process Vertex nodes by formatting and adding links to graph neighbours."""
     for vertex_node in doctree.findall(VertexNode):
         uid = vertex_node["graph_uid"]
-
-        new_content = nodes.Element()
-        new_content.append(nodes.Text(f"---start vertex {uid}---"))
-        new_content.append(vertex_node.deepcopy())
-        new_content.append(
-            nodes.line(f"---end vertex {uid}---", f"---end vertex {uid}---")
-        )
-        vertex_node.replace_self(new_content)
+        vertex_node.replace_self(layout.default(uid, vertex_node.deepcopy()))
 
 
 def purge(_app: Sphinx, env: BuildEnvironment, docname: str) -> None:

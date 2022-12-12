@@ -200,6 +200,21 @@ astor = ">=0.1"
 flake8 = ">=3.7"
 
 [[package]]
+name = "flake8-unused-arguments"
+version = "0.0.12"
+description = "flake8 extension to warn on unused function arguments"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "flake8-unused-arguments-0.0.12.tar.gz", hash = "sha256:cb35d0f2df5c58c42a60ed2db07bbedb86e05aac7188d203880da27346036861"},
+    {file = "flake8_unused_arguments-0.0.12-py3-none-any.whl", hash = "sha256:6e533f45b5b208b6041dd90dfc146251b5e8e5af29eb4b1fa787c517c370c16f"},
+]
+
+[package.dependencies]
+flake8 = ">3.0.0"
+
+[[package]]
 name = "idna"
 version = "3.4"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -699,4 +714,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e85c47f7bed5a4bc620de28d958a24d19ee1f9ae5ea0fab3b18fa06582cf7cf9"
+content-hash = "56036d026465acc4c73dd57166e36bf04c5864679ce4da19b376d4232b0b67ef"
