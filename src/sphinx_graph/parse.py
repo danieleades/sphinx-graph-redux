@@ -42,6 +42,7 @@ def parents(input: str | None) -> dict[str, str | None]:
             uid = subtokens[0]
             fingerprint = subtokens[1]
         else:
+            uid = token
             fingerprint = None
         output[uid] = fingerprint
     return output
