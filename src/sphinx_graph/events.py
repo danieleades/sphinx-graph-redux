@@ -42,20 +42,13 @@ def process(app: Sphinx, doctree: nodes.document, _fromdocname: str) -> None:
         for vertex_node in doctree.findall(VertexNode):
             uid = vertex_node["graph_uid"]
             info = state.all_vertices[uid]
-            child_uids = list(graph.predecessors(uid))
-            parent_uids = info.parents.keys()
-            parents = relative_uris(
-                builder, info.docname, state.all_vertices, parent_uids
-            )
-            children = relative_uris(
-                builder, info.docname, state.all_vertices, child_uids
-            )
-            format_helper = layout.FormatHelper(
-                uid, vertex_node.deepcopy(), parents, children
-            )
+            [parents, children] = [
+                relative_uris(builder, info.docname, state.all_vertices, uids)
+                for uids in [info.parents.keys(), graph.predecessors(uid)]
+            ]
             vertex_node.replace_self(
                 layout.apply_formatting(
-                    info.config.layout or layout.DEFAULT, format_helper
+                    uid, vertex_node.deepcopy(), parents, children, info.config.layout
                 )
             )
 

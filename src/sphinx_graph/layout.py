@@ -159,11 +159,20 @@ LAYOUTS: dict[str, Formatter] = {
 }
 
 
-def apply_formatting(layout: str, helper: FormatHelper) -> nodes.Node:
-    if layout not in LAYOUTS:
+def apply_formatting(
+    uid: str,
+    content: nodes.Node,
+    parents: Iterable[tuple[str, str]],
+    children: Iterable[tuple[str, str]],
+    layout: str | None,
+) -> nodes.Node:
+    if layout is None:
+        layout = DEFAULT
+    elif layout not in LAYOUTS:
         logger.error(
-            f"vertex {helper.uid} has unknown layout '{layout}'. Defaulting to '{DEFAULT}' layout."
+            f"vertex {uid} has unknown layout '{layout}'. Defaulting to '{DEFAULT}' layout."
         )
         layout = DEFAULT
+    helper = FormatHelper(uid, content, parents, children)
     formatter = LAYOUTS[layout]
     return formatter(helper)
