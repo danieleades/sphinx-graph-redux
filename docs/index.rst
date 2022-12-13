@@ -23,6 +23,7 @@ so do 'ref'-style links. Here's one to the :ref:`glossary`.
 
 .. vertex:: 002
    :parents: 001
+   :require_fingerprints:
 
    .. note::
 
