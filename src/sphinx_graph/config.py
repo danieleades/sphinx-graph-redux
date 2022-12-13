@@ -16,7 +16,7 @@ class VertexConfig:
             if set, and ignored otherwise.
     """
 
-    require_fingerprints: bool | None = False
+    require_fingerprints: bool | None = None
     layout: str | None = None
 
     def _override(self, other: VertexConfig) -> VertexConfig:

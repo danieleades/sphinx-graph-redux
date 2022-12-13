@@ -34,6 +34,7 @@ pep8-naming = "^0.13.2"
 strict = true
 show_error_codes = true
 files = "src,tests"
+exclude = "tests/roots"
 
 [[tool.mypy.overrides]]
 module = ["networkx.*"]

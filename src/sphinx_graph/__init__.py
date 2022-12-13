@@ -10,18 +10,24 @@ adding it to ``conf.py``:
     ]
 """
 
+__all__ = [
+    "Config",
+    "VertexConfig",
+]
+
 from typing import TypedDict
 
 from docutils import nodes
 from sphinx.application import Sphinx
 
 from sphinx_graph import events
-from sphinx_graph.config import Config
+from sphinx_graph.config import Config, VertexConfig
 from sphinx_graph.directive import Directive
 from sphinx_graph.node import Node
 
 __all__ = [
     "Config",
+    "VertexConfig",
     "Formatter",
     "FormatHelper",
 ]
