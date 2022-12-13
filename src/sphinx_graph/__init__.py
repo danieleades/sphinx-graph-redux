@@ -16,6 +16,7 @@ from docutils import nodes
 from sphinx.application import Sphinx
 
 from sphinx_graph import events
+from sphinx_graph.config import Config
 from sphinx_graph.directive import Directive
 from sphinx_graph.node import Node
 
@@ -51,6 +52,8 @@ def depart_node(_self: nodes.GenericNodeVisitor, _node: Node) -> None:
 
 def setup(app: Sphinx) -> ExtensionMetadata:
     """Set up the sphinx-graph extension."""
+    app.add_config_value("graph_config", Config(), "", types=(Config))
+
     app.add_node(
         Node,
         html=(visit_node, depart_node),

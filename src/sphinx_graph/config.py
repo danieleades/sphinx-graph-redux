@@ -19,9 +19,11 @@ class VertexConfig:
     require_fingerprints: bool | None = False
     layout: str | None = None
 
-    def _override(self, other: "VertexConfig") -> VertexConfig:
+    def _override(self, other: VertexConfig) -> VertexConfig:
         return VertexConfig(
-            require_fingerprints=self.require_fingerprints if other.require_fingerprints is None else other.require_fingerprints,
+            require_fingerprints=self.require_fingerprints
+            if other.require_fingerprints is None
+            else other.require_fingerprints,
             layout=self.layout if other.layout is None else other.layout,
         )
 
@@ -76,5 +78,5 @@ class Config:
                 )
     """
 
-    vertex_config: VertexConfig = VertexConfig()
+    vertex_config: VertexConfig = field(default_factory=VertexConfig)
     types: dict[str, VertexConfig] = field(default_factory=dict)
