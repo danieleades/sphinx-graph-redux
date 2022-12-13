@@ -140,7 +140,7 @@ def subtle(helper: FormatHelper) -> nodes.Node:
         one_liner.extend(helper.child_list())
 
     paragraph = nodes.paragraph()
-    paragraph += one_liner
+    paragraph.append(one_liner)
 
     element = nodes.Element()
     element.append(paragraph)
