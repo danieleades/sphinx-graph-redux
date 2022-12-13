@@ -30,52 +30,35 @@ class VertexConfig:
 
 @dataclass
 class Config:
-    """Configuration object for Sphinx Graph.
+    """Example function with types documented in the docstring.
 
-    This class is the entry point for all configuration.
+    `PEP 484`_ type annotations are supported. If attribute, parameter, and
+    return types are annotated according to `PEP 484`_, they do not need to be
+    included in the docstring:
 
-    Example:
-        Configuration should be set in the ``conf.py`` file:
+    Example::
 
-        .. code:: python
+        from sphinx_graph import Config, DirectiveConfig
 
-            from sphinx_graph import Config
-
-            graph_config = Config()
+        graph_config = Config(
+            vertex_config = DirectiveConfig(
+                # this is the default value
+                require_fingerprints=False,
+            ),
+            types = {
+                # any directives with the 'req' type will require fingerprints
+                "req": DirectiveConfig(
+                    require_fingerprints=True
+                )
+            },
+        )
 
     Args:
-        vertex_config
-            Default configuration to apply to all vertices.
-
-            Can be overriden for specific vertices, or 'types' of vertices (see below)
-
-            Example:
-            .. code:: python
-
-                from sphinx_graph import Config, DirectiveConfig
-                import re
-
-                graph_config = Config(
-                    vertex_config = DirectiveConfig(
-                        require_fingerprints = True,
-                    ),
-                )
-        types:
-            Set default directive configuration for 'types' of vertices.
-
-            Example:
-            .. code:: python
-
-                from sphinx_graph import Config, DirectiveConfig
-                import re
-
-                graph_config = Config(
-                    types = {
-                        "req": DirectiveConfig(
-                            require_fingerprints = True,
-                        )
-                    },
-                )
+        vertex_config: Default configuration to apply to all vertices.
+            The default configuration is overridden by any config set for a
+            specific 'type' of vertex. That is in turn overriden by any configuration
+            set directly on the vertex directive.
+        types: Set default directive configuration for 'types' of vertices.
     """
 
     vertex_config: VertexConfig = field(default_factory=VertexConfig)
