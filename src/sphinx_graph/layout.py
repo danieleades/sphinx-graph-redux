@@ -5,6 +5,9 @@ from __future__ import annotations
 from typing import Callable, Iterable, TypeVar
 
 from docutils import nodes
+from sphinx.util import logging
+
+logger = logging.getLogger(__name__)
 
 __all__ = [
     "FormatHelper",
@@ -13,7 +16,7 @@ __all__ = [
     "DEFAULT",
 ]
 
-DEFAULT = "default"
+DEFAULT = "subtle"
 
 
 T = TypeVar("T")
@@ -32,7 +35,7 @@ def comma_separated_list(items: Iterable[nodes.Node]) -> Iterable[nodes.Node]:
     yield from intersperse(items, nodes.Text(", "))
 
 
-def create_reference(relative_uri: str, target_uid: str) -> nodes.reference:
+def create_reference(target_uid: str, relative_uri: str) -> nodes.reference:
     """Create a docutils 'reference' node to a target vertex."""
     refuri = f"{relative_uri}#{target_uid}"
     reference = nodes.reference(refuri=refuri)
@@ -154,3 +157,13 @@ LAYOUTS: dict[str, Formatter] = {
     "transparent": transparent,
     "subtle": subtle,
 }
+
+
+def apply_formatting(layout: str, helper: FormatHelper) -> nodes.Node:
+    if layout not in LAYOUTS:
+        logger.error(
+            f"vertex {helper.uid} has unknown layout '{layout}'. Defaulting to '{DEFAULT}' layout."
+        )
+        layout = DEFAULT
+    formatter = LAYOUTS[layout]
+    return formatter(helper)
