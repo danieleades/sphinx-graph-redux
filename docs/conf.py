@@ -14,9 +14,14 @@ release = "0.1.0"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+
 extensions = [
-    "sphinx_graph",
+    "sphinx.ext.autodoc",
     "sphinx.ext.autosectionlabel",
+    "sphinx.ext.autosummary",
+    "sphinx.ext.napoleon",
+    "sphinx_rtd_theme",
+    "sphinx_graph",
 ]
 
 templates_path = ["_templates"]

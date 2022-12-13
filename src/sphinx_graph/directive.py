@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import base64
+import hashlib
 from typing import Sequence
 
 from docutils import nodes
@@ -38,10 +40,19 @@ class Directive(SphinxDirective):
         content_node = VertexNode(graph_uid=uid)
         nested_parse_with_titles(self.state, self.content, content_node)
 
+        fingerprint = base64.b64encode(
+            hashlib.md5(content_node.astext().encode()).digest()
+        )[:4].decode()
+
         with State.get(self.env) as state:
             state.insert_vertex(
                 uid,
-                Info(docname=self.env.docname, config=self._vertex_config()),
+                Info(
+                    docname=self.env.docname,
+                    config=self._vertex_config(),
+                    parents=self.options.get("parents", {}),
+                    fingerprint=fingerprint,
+                ),
             )
 
         targetnode = nodes.target("", "", ids=[uid])
