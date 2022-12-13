@@ -8,9 +8,7 @@ def default(uid: str, content: nodes.Node) -> nodes.Node:
     new_content = nodes.Element()
     new_content.append(nodes.Text(f"---start vertex {uid}---"))
     new_content.append(content)
-    new_content.append(
-        nodes.line(f"---end vertex {uid}---", f"---end vertex {uid}---")
-    )
+    new_content.append(nodes.line(f"---end vertex {uid}---", f"---end vertex {uid}---"))
     return new_content
 
 

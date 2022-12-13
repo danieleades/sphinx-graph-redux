@@ -70,5 +70,5 @@ class Directive(SphinxDirective):
         return (
             self._default_config()
             ._override(self._type_config())
-            ._override(self._vertex_config())
+            ._override(self._directive_config())
         )
