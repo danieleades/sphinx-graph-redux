@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass
 from typing import Iterator
 
+from networkx import DiGraph
 from sphinx.environment import BuildEnvironment
 from sphinx.errors import DocumentError
 from sphinx.util import logging
@@ -47,10 +48,17 @@ class State:
         env.graph_all_vertices = state.all_vertices  # type: ignore[attr-defined]
 
 
-@contextmanager
-def get_state(env: BuildEnvironment) -> Iterator[State]:
-    """Get the GraphContext object for the given environment."""
-    all_vertices = getattr(env, "graph_all_vertices", {})
-    state = State(all_vertices)
-    yield state
-    env.graph_all_vertices = state.all_vertices  # type: ignore[attr-defined]
+def build_graph(vertices: dict[str, VertexInfo]) -> DiGraph:
+    """Build the graph from the list of vertices.
+
+    This is called during setup, and doesn't need to be called again.
+    """
+    graph = DiGraph()
+    for uid, vertex_info in vertices.items():
+        # add each node
+        graph.add_node(uid)
+
+        # add all 'parent' edges
+        for parent_uid, fingerprint in vertex_info.parents.items():
+            graph.add_edge(uid, parent_uid, fingerprint=fingerprint)
+    return graph

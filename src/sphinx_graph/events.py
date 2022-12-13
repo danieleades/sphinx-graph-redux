@@ -8,7 +8,7 @@ from sphinx.environment import BuildEnvironment
 
 from sphinx_graph import layout
 from sphinx_graph.node import Node as VertexNode
-from sphinx_graph.state import State
+from sphinx_graph.state import State, build_graph
 
 __all__ = [
     "process",
@@ -17,11 +17,40 @@ __all__ = [
 ]
 
 
-def process(_app: Sphinx, doctree: nodes.document, _fromdocname: str) -> None:
+def process(app: Sphinx, doctree: nodes.document, _fromdocname: str) -> None:
     """Process Vertex nodes by formatting and adding links to graph neighbours."""
-    for vertex_node in doctree.findall(VertexNode):
-        uid = vertex_node["graph_uid"]
-        vertex_node.replace_self(layout.default(uid, vertex_node.deepcopy()))
+    builder = app.builder
+    with State.get(app.env) as state:
+        graph = build_graph(state.all_vertices)
+        for vertex_node in doctree.findall(VertexNode):
+            uid = vertex_node["graph_uid"]
+            info = state.all_vertices[uid]
+            child_uids = list(graph.predecessors(uid))
+
+            parent_uids = info.parents.keys()
+            from_docname = info.docname
+            parents = [
+                (
+                    builder.get_relative_uri(
+                        from_docname, state.all_vertices[uid].docname
+                    ),
+                    uid,
+                )
+                for uid in parent_uids
+            ]
+            children = [
+                (
+                    builder.get_relative_uri(
+                        from_docname, state.all_vertices[uid].docname
+                    ),
+                    uid,
+                )
+                for uid in child_uids
+            ]
+            format_helper = layout.FormatHelper(
+                uid, vertex_node.deepcopy(), parents, children
+            )
+            vertex_node.replace_self(layout.subtle(format_helper))
 
 
 def purge(_app: Sphinx, env: BuildEnvironment, docname: str) -> None:

@@ -41,7 +41,11 @@ class Directive(SphinxDirective):
         with State.get(self.env) as state:
             state.insert_vertex(
                 uid,
-                Info(docname=self.env.docname, config=self._vertex_config()),
+                Info(
+                    docname=self.env.docname,
+                    config=self._vertex_config(),
+                    parents=self.options.get("parents", {}),
+                ),
             )
 
         targetnode = nodes.target("", "", ids=[uid])

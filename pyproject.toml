@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.10"
 sphinx = "^5.3.0"
+networkx = "^2.8.8"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -33,6 +34,10 @@ pep8-naming = "^0.13.2"
 strict = true
 show_error_codes = true
 files = "src,tests"
+
+[[tool.mypy.overrides]]
+module = ["networkx.*"]
+ignore_missing_imports = true
 
 [tool.isort]
 profile = "black"

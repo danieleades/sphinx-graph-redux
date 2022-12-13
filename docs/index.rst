@@ -22,12 +22,14 @@ so do 'ref'-style links. Here's one to the :ref:`glossary`.
 
 
 .. vertex:: 002
+   :parents: 001
 
    .. note::
 
       nested directives seem to work fine
 
 .. vertex:: 003
+   :parents: 001, 002
 
    nested subheadings work fine too
 
