@@ -1,5 +1,4 @@
-from sphinx_graph import Config
-from sphinx_graph import VertexConfig
+from sphinx_graph import Config, VertexConfig
 
 project = "test"
 copyright = "2022, daniel.eades"
@@ -12,12 +11,10 @@ extensions = [
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 graph_config = Config(
-    vertex_config=VertexConfig(
-        require_fingerprints=True
-    ),
+    vertex_config=VertexConfig(require_fingerprints=True),
     types={
         "req": VertexConfig(
             require_fingerprints=False,
         )
-    }
+    },
 )

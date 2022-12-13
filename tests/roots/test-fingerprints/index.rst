@@ -20,4 +20,3 @@
 
    this is a vertex directive. Its parents require 'fingerprints', even though it is of the 'req' type, because this value is
    overridden on the directive itself
-
