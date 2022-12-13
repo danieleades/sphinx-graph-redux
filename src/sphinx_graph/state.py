@@ -73,9 +73,7 @@ def build_graph(vertices: dict[str, VertexInfo]) -> DiGraph:
 def check_fingerprints(graph: DiGraph, vertices: dict[str, VertexInfo]) -> None:
     """Check for suspect links and raise sphinx warnings."""
     for (child_id, parent_id, fingerprint) in graph.edges.data("fingerprint"):
-        print(f"checking link from {child_id} to {parent_id}")
         fingerprints_required = vertices[child_id].config.require_fingerprints
-        print(f"fingerprints required: {fingerprints_required}")
         parent = vertices[parent_id]
         if fingerprints_required and fingerprint is None:
             logger.warning(

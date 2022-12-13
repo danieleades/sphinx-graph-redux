@@ -29,6 +29,7 @@ flake8-simplify = "^0.19.3"
 flake8-unused-arguments = "^0.0.12"
 mypy = "^0.991"
 pep8-naming = "^0.13.2"
+sphinx-rtd-theme = "^1.1.1"
 
 [tool.mypy]
 strict = true
